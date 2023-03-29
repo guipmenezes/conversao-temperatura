@@ -35,4 +35,3 @@ jobs:
       
       - name: Execução do teste
         run: mocha src/test/convert.js
-
