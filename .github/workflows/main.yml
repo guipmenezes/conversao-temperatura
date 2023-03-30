@@ -3,20 +3,17 @@ name: CI
 on:
   push:
     branches: [ main ]
-  pull_request: 
-    branches: [ main ]
     
   workflow_dispatch:
   
 jobs:
-  build:
+  CI:
     runs-on: ubuntu-latest
     
     steps:
       - uses: actions/checkout@v2
-      - name: Run a one-line script
-        run: echo Hello, World!
-      - name: Run a multi-line script
-        run:
-          echo Add other actions to build,
-          echo test, and deploy your project.
+      
+      - name: Setup do NodeJs
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: 16.16.0
