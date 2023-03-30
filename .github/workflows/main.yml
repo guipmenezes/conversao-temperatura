@@ -55,5 +55,5 @@ jobs:
           file: ./src/Dockerfile
           push: true
           tags: |
-            guimenezes/aula-conversao-temperatura:v1
+            guimenezes/aula-conversao-temperatura:${{github.run_number}}
             guimenezes/aula-conversao-temperatura:latest
