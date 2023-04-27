@@ -1,0 +1,28 @@
+version: 0.2
+
+
+phases:
+  pre_build:
+    commands:
+      - echo Loggin in to Amazon ECR...
+      - aws ecr --version
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 491517544071.dkr.ecr.us-east-2.amazonaws.com
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t nodepipeline-conversor .
+      - docker tag nodepipeline-conversor:latest 491517544071.dkr.ecr.us-east-2.amazonaws.com/nodepipeline-conversor:latest
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push 491517544071.dkr.ecr.us-east-2.amazonaws.com/nodepipeline-conversor:latest
+      - echo Writing image definitios file...
+      - printf '[{"name":"nodepipeline-conversor","imageUri":"%s"}]' 491517544071.dkr.ecr.us-east-2.amazonaws.com/nodepipeline-conversor:latest > imagedefinitions.json
+      - cat imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json
