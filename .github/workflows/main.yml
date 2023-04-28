@@ -52,7 +52,7 @@ jobs:
         uses: docker/build-push-action@v4.0.0
         with:
           context: ./src
-          file: ./Dockerfile
+          file: ./src/Dockerfile
           push: true
           tags: |
             guimenezes/aula-conversao-temperatura:${{github.run_number}}
