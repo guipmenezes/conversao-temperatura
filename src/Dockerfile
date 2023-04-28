@@ -1,13 +1,13 @@
 FROM node:16.16.0
 RUN apt-get update && apt-get install git -y && apt-get install imagemagick -y;
 
-WORKDIR /ecs-app
+WORKDIR /app
 
 COPY package*.json ./
 COPY . .
 
 RUN npm install
-RUN chown -R node:node /ecs-app
+RUN chown -R node:node /app
 
 ENV NODE_ENV=production
 ENV ENV_ECS=true
