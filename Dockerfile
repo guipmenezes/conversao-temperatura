@@ -14,4 +14,5 @@ ENV ENV_ECS=true
 USER root
 EXPOSE 8080
 
+CMD ["node", "server.js"]
 ENTRYPOINT [ "npm", "start" ]
